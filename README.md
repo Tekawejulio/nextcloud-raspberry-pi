@@ -178,6 +178,11 @@ php occ app:install mail
 - Gestion de la configuration Nextcloud en ligne de commande (`occ`)
 - Cohabitation de plusieurs services Docker sur un même hôte sans conflit de ports
 
+
+## Aperçu
+
+![Tableau de bord Nextcloud](Capture%20d'écran%202026-10-05%20174504.png)
+
 ## Auteur
 
 Julio — [GitHub](https://github.com/Tekawejulio)
