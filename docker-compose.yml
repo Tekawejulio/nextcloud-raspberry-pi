@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mariadb:11
+    container_name: nextcloud-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'CHANGE_MOI_ROOT'
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: 'CHANGE_MOI_DB'
+    volumes:
+      - ./db-data:/var/lib/mysql
+      - ./mariadb-custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+
+  app:
+    image: nextcloud:apache
+    container_name: nextcloud-app
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: 'CHANGE_MOI_DB'
+    volumes:
+      - ./nc-data:/var/www/html
+    depends_on:
+      - db
+
+  proxy:
+    image: nginx:alpine
+    container_name: nextcloud-proxy
+    restart: unless-stopped
+    ports:
+      - "8443:443"
+    volumes:
+      - ./nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - app

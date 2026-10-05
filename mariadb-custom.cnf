@@ -1,0 +1,5 @@
+[mariadb]
+slow_query_log = 1
+long_query_time = 2
+innodb_log_file_size = 256M
+table_open_cache = 4000
